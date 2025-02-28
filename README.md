@@ -2,5 +2,5 @@ This repository provides Python code to run infinite-armed bandit algorithms in 
 
 To run experiments:
 ```python
-run python3 main_multi.py
+python3 main_multi.py
 ```
