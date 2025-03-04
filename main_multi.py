@@ -197,8 +197,7 @@ def plot(T,num,repeat, beta):
 
             
 if __name__=='__main__':
-    # Read input
-    # beta = int(sys.argv[1]) # '1': (left) in Figure 1, '2': (right) in Figure 4
+
     
     run_bool=True # True: run model and save data with plot, False: load data with plot.
     
