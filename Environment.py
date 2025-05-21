@@ -54,7 +54,7 @@ class rotting_many_Env: #slow rotting
         exp_reward=copy.deepcopy(self.exp_reward[k])
         # if t%S==0:
         #     self.exp_reward[k]= np.random.uniform(0,1)
-        rho_t=self.rho*(30/(t+1))
+        rho_t=self.rho*(100/(t+1))
         if self.bool==True:
             L=int(np.sqrt(self.T))
             if t<=L:

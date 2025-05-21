@@ -1,5 +1,5 @@
 from Environment import *
-from Algorithms_old import *
+from Algorithms import *
 import random
 import numpy as np
 import math
@@ -241,8 +241,8 @@ if __name__=='__main__':
     T=10**5  # Maximum Time horizon
     num=5 # number of investigated horizon times over maximum time horizon
     repeat=5    # number of running algorithms using different seeds.
-    beta=0.8
-    L_bool=False
+    beta=1
+    L_bool=True
     if run_bool==True:
         # beta=0.5
         # run_multiprocessing(T,num,repeat, beta)

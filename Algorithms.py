@@ -245,21 +245,34 @@ class SSUCB_SW:
         ucb=np.zeros(K)
         for k in range(K):
             self.Env.sample_arm()            
-
         for t in tqdm(range(T)):
             if t<K:
                 k=t
-                print(t)
             else:         
                 k=np.argmax(ucb)    
             n_hist[k,t]=1    
             self.r_Exp[t],self.r[t]=self.Env.observe(k,t)
             r_hist[k,t]=self.r[t]
-            print('window',max(t-w,0))
-            mu[k]=sum(r_hist[k,max(t-w,0):t])/sum(n_hist[k,max(t-w,0):t])
+            if t>1:
+                mu[k]=np.sum(r_hist[k,max(t-w,0):t])/np.sum(n_hist[k,max(t-w,0):t])
             # mu[k]=(mu[k]*(n[k])+self.r[t])/(n[k]+1)                
             n[k]=n[k]+1
-            ucb[k]=mu[k]+math.sqrt(2*math.log(1+(t+1)*(math.log(t+1))**2)/sum(n_hist[k,max(t-w,0):t]))
+            if t>1:
+                ucb[k]=mu[k]+math.sqrt(2*math.log(1+(t+1)*(math.log(t+1))**2)/np.sum(n_hist[k,max(t-w,0):t]))
+        # for t in tqdm(range(T)):
+        #     if t<K:
+        #         k=t
+        #         print(t)
+        #     else:         
+        #         k=np.argmax(ucb)    
+        #     n_hist[k,t]=1    
+        #     self.r_Exp[t],self.r[t]=self.Env.observe(k,t)
+        #     r_hist[k,t]=self.r[t]
+        #     print('window',max(t-w,0))
+        #     mu[k]=sum(r_hist[k,max(t-w,0):t])/sum(n_hist[k,max(t-w,0):t])
+        #     # mu[k]=(mu[k]*(n[k])+self.r[t])/(n[k]+1)                
+        #     n[k]=n[k]+1
+        #     ucb[k]=mu[k]+math.sqrt(2*math.log(1+(t+1)*(math.log(t+1))**2)/sum(n_hist[k,max(t-w,0):t]))
 
     def rewards(self):
         return self.r_Exp  
