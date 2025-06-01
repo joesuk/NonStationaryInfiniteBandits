@@ -20,7 +20,6 @@ def run(T,num,repeat,beta, i, j, L_bool): #regret vs T
     avg_regret_sum=dict()
 
     alg_list=['algorithm1', 'AUCBT_AW', 'SSUCB','Elimination', 'SSUCB-SW']
-    # alg_list=['SSUCB-SW']
 
     print('num:', i)
     if i==0:
@@ -145,8 +144,6 @@ def plot(T,num,repeat, beta):
     fig,(ax)=plt.subplots(1,1)
 
 
-    # regret_ref_upper_1=[(max(t**((beta+1)/(beta+2))*np.log(t),t**((2)/(3))*np.log(t))) for t in T_list]
-    # regret_ref_upper_2=[(max(t**((beta+1)/(beta+2))*np.log(t),t**((2)/(3))*np.log(t))+max(t**((2*beta+1)/(2*beta+2))*np.log(t),t**((3)/(4))*np.log(t))) for t in T_list]
     ax.errorbar(x=T_list, y=regret_list['SSUCB-SW'], yerr=1.96*std_list['SSUCB-SW']/np.sqrt(repeat), color="orange", capsize=7,capthick=2,elinewidth=2,linewidth=2,
                  marker="s", markersize=0,label='SSUCB-SW',zorder=4,ls='-')
     ax.errorbar(x=T_list, y=regret_list['SSUCB'], yerr=1.96*std_list['SSUCB']/np.sqrt(repeat), color="black", capsize=7,capthick=2,elinewidth=2,linewidth=2,
@@ -170,8 +167,6 @@ def plot(T,num,repeat, beta):
     # remove the errorbars in legend
     handles, labels = ax.get_legend_handles_labels()
     handles = [h[0] for h in handles]
-    # labels = [labels[2], labels[1],labels[0], labels[3], handles[4]]
-    # handles=[handles[2],handles[1],handles[0], handles[3], handles[4]]
 
     ax.legend(handles, labels,numpoints=1)
     # plot 
@@ -184,98 +179,15 @@ def plot(T,num,repeat, beta):
     plt.show()
     plt.clf()    
     
-    # fig,(ax)=plt.subplots(1,1)
-    # T_p=int(T/10)
-
-    # ax.errorbar(x=range(T), y=regret_list_T['SSUCB'], yerr=1.96*std_list_T['SSUCB']/np.sqrt(repeat), color="salmon", errorevery=T_p,
-    #              marker="s", markersize=0,label='SSUCB',zorder=1,ls=':')
-    # ax.errorbar(x=range(T), y=regret_list_T['AUCBT_AW'], yerr=1.96*std_list_T['AUCBT_AW']/np.sqrt(repeat), color="lightseagreen", errorevery=T_p,
-    #              marker="o", markersize=0,label='AUCB-AW',zorder=2,ls='--')
-
-      
-    # ax.errorbar(x=range(T), y=regret_list_T['algorithm1'], yerr=1.96*std_list_T['algorithm1']/np.sqrt(repeat), color="royalblue", errorevery=T_p,
-    #              marker="^", markersize=0,label='Blackbox (Algorithm 1)',zorder=3,ls='-') 
-    # ax.errorbar(x=range(T), y=regret_list_T['Elimination'], yerr=1.96*std_list_T['Elimination']/np.sqrt(repeat), color="gray", errorevery=T_p,  
-    #              marker="s", markersize=0,label='Elimination (Algorithm 2)',zorder=1,ls='-.')
-    # # ax.errorbar(x=T_list, y=regret_list4, yerr=1.96*std_list4/np.sqrt(repeat), color="gray", capsize=7,capthick=2,elinewidth=2,linewidth=3,
-    # #              marker="s", markersize=0,label='SSUCB',zorder=1,ls='-.')
-    # # ax.errorbar(x=T_list, y=regret_ref_upper_1, yerr=0, color="lightsteelblue", capsize=7,capthick=2,elinewidth=2,linewidth=3,
-    # #              marker="s", markersize=0,label='Regret upper bound (Alg1)',zorder=1,ls='--')
-    # # ax.errorbar(x=T_list, y=regret_ref_upper_2, yerr=0, color="palegreen", capsize=7,capthick=2,elinewidth=2,linewidth=3,
-    # #              marker="s", markersize=0,label='Regret upper bound (Alg2)',zorder=1,ls='--')  
-
-    # Path("./plot").mkdir(parents=True, exist_ok=True)
-
-
-
-    # #font size
-    # ax.tick_params(labelsize=18)
-    # plt.rc('legend',fontsize=15)
-    # ax.yaxis.get_offset_text().set_fontsize(18)
-    # ax.xaxis.get_offset_text().set_fontsize(18)
-    # # remove the errorbars in legend
-    # handles, labels = ax.get_legend_handles_labels()
-    # handles = [h[0] for h in handles]
-    # labels = [ labels[0], labels[1],labels[2], labels[3]]
-    # handles=[handles[0],handles[1],handles[2], handles[3]]
-
-    # ax.legend(handles, labels,numpoints=1)
-    # # plot 
-    # plt.gcf().subplots_adjust(bottom=0.15)
-    # plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-
-    # plt.xlabel(r'$T$',fontsize=18)
-    # plt.ylabel(r'$R(T)$',fontsize=18)
-    # plt.savefig('./plot/T'+str(T)+'num'+str(num)+'beta'+str(beta)+'repeat'+str(repeat)+'T.pdf',bbox_inches='tight')
-    # plt.show()
-    # plt.clf()    
-            
 if __name__=='__main__':
-    # Read input
-    # beta = int(sys.argv[1]) # '1': (left) in Figure 1, '2': (right) in Figure 4
     
     run_bool=True# True: run model and save data with plot, False: load data with plot.
     
-    
-    # if opt==1: 
     T=10**5  # Maximum Time horizon
     num=5 # number of investigated horizon times over maximum time horizon
     repeat=5    # number of running algorithms using different seeds.
     beta=1
-    L_bool=True
+    L_bool=True # True: experiments with the number of nonstationarity
     if run_bool==True:
-        # beta=0.5
-        # run_multiprocessing(T,num,repeat, beta)
-        # plot(T,num,repeat, beta)
         run_multiprocessing(T,num,repeat, beta, L_bool)
     plot(T,num,repeat, beta)    
-    # beta=1.2
-    # if run_bool==True:
-    #     # beta=0.5
-    #     # run_multiprocessing(T,num,repeat, beta)
-    #     # plot(T,num,repeat, beta)
-    #     run_multiprocessing(T,num,repeat, beta, L_bool)
-    # plot(T,num,repeat, beta) 
-    # beta=0.8
-    # if run_bool==True:
-    #     beta=0.5
-    #     run_multiprocessing(T,num,repeat, beta, L_bool)
-    # plot(T,num,repeat, beta)
-        # run_multiprocessing(T,num,repeat, beta)
-    # plot(T,num,repeat, beta) 
-        # beta=1.5
-        # run_multiprocessing(T,num,repeat, beta)
-        # plot(T,num,repeat, beta)
-
-    # if opt==2: 
-    #     T=5*10**6  
-    #     num=5 
-    #     repeat=10   
-    #     beta=0.5
-    #     run(T,num,repeat, beta, run_bool)
-    # if opt==3: 
-    #     T=5*10**6  
-    #     num=5 
-    #     repeat=10   
-    #     beta=2
-    #     run(T,num,repeat, beta, run_bool)
